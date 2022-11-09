@@ -1,13 +1,44 @@
 package com.exasol;
 
 /**
- * This exception indicates that the compilation of a script failed, or
- * that the script api callback functions are not correctly implemented.
+ * This exception indicates that the compilation of a script failed, or that the script API callback functions are not
+ * correctly implemented.
  */
 public class ExaCompilationException extends Exception {
     private static final long serialVersionUID = 1L;
-    public ExaCompilationException() { super(); }
-    public ExaCompilationException(String message) { super(message); }
-    public ExaCompilationException(String message, Throwable cause) { super(message, cause); }
-    public ExaCompilationException(Throwable cause) { super(cause); }
+
+    /**
+     * Create a new instance of an {@link ExaCompilationException}.
+     */
+    public ExaCompilationException() {
+        super();
+    }
+
+    /**
+     * Create a new instance of an {@link ExaCompilationException}.
+     *
+     * @param message error message
+     */
+    public ExaCompilationException(String message) {
+        super(message);
+    }
+
+    /**
+     * Create a new instance of an {@link ExaCompilationException}.
+     *
+     * @param message error message
+     * @param cause exception causing this one
+     */
+    public ExaCompilationException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    /**
+     * Create a new instance of an {@link ExaCompilationException}.
+     *
+     * @param cause exception causing this one
+     */
+    public ExaCompilationException(Throwable cause) {
+        super(cause);
+    }
 }

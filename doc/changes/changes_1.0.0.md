@@ -6,9 +6,10 @@ Code name: Extracted UDF API from script-languages
 
 This is the first separate release of the UDF API. We extracted it from the project [script-languages release 2019-07-26](https://github.com/exasol/script-languages/releases/tag/20190726). Note that the API has been stable for a very long time and this extracted release did not change the API either. We just extracted it to enable a better way of releasing and distributing the API in the future.
 
-## Features
+## Refactoring
 
 * #1: Extracted UDF API from `script-languages`
+* #5: Fixed JavaDoc and code smells
 
 ## Dependency Updates
 
@@ -35,6 +36,8 @@ This is the first separate release of the UDF API. We extracted it from the proj
 * Added `org.apache.maven.plugins:maven-enforcer-plugin:3.1.0`
 * Added `org.apache.maven.plugins:maven-failsafe-plugin:3.0.0-M7`
 * Added `org.apache.maven.plugins:maven-install-plugin:2.4`
+* Added `org.apache.maven.plugins:maven-jar-plugin:2.4`
+* Added `org.apache.maven.plugins:maven-resources-plugin:2.6`
 * Added `org.apache.maven.plugins:maven-site-plugin:3.3`
 * Added `org.apache.maven.plugins:maven-surefire-plugin:3.0.0-M7`
 * Added `org.codehaus.mojo:flatten-maven-plugin:1.3.0`

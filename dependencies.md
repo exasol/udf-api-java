@@ -32,9 +32,11 @@
 | [Project keeper maven plugin][30]                       | [The MIT License][31]                          |
 | [Artifact reference checker and unifier][32]            | [MIT][33]                                      |
 | [Maven Clean Plugin][34]                                | [The Apache Software License, Version 2.0][21] |
-| [Maven Install Plugin][35]                              | [The Apache Software License, Version 2.0][21] |
-| [Maven Deploy Plugin][36]                               | [The Apache Software License, Version 2.0][21] |
-| [Maven Site Plugin 3][37]                               | [The Apache Software License, Version 2.0][21] |
+| [Maven Resources Plugin][35]                            | [The Apache Software License, Version 2.0][21] |
+| [Maven JAR Plugin][36]                                  | [The Apache Software License, Version 2.0][21] |
+| [Maven Install Plugin][37]                              | [The Apache Software License, Version 2.0][21] |
+| [Maven Deploy Plugin][38]                               | [The Apache Software License, Version 2.0][21] |
+| [Maven Site Plugin 3][39]                               | [The Apache Software License, Version 2.0][21] |
 
 [0]: https://github.com/exasol/exasol-testcontainers/
 [1]: https://github.com/exasol/exasol-testcontainers/blob/main/LICENSE
@@ -71,6 +73,8 @@
 [32]: https://github.com/exasol/artifact-reference-checker-maven-plugin
 [33]: https://opensource.org/licenses/MIT
 [34]: http://maven.apache.org/plugins/maven-clean-plugin/
-[35]: http://maven.apache.org/plugins/maven-install-plugin/
-[36]: http://maven.apache.org/plugins/maven-deploy-plugin/
-[37]: http://maven.apache.org/plugins/maven-site-plugin/
+[35]: http://maven.apache.org/plugins/maven-resources-plugin/
+[36]: http://maven.apache.org/plugins/maven-jar-plugin/
+[37]: http://maven.apache.org/plugins/maven-install-plugin/
+[38]: http://maven.apache.org/plugins/maven-deploy-plugin/
+[39]: http://maven.apache.org/plugins/maven-site-plugin/
