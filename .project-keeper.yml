@@ -1,0 +1,7 @@
+sources:
+  - type: "maven"
+    path: "pom.xml"
+    modules:
+      - integration_tests
+
+linkReplacements:
