@@ -29,7 +29,6 @@ This is the first separate release of the UDF API. We extracted it from the proj
 * Added `com.exasol:error-code-crawler-maven-plugin:1.2.1`
 * Added `com.exasol:project-keeper-maven-plugin:2.9.1`
 * Added `io.github.zlika:reproducible-build-maven-plugin:0.16`
-* Added `org.apache.maven.plugins:maven-assembly-plugin:2.2-beta-5`
 * Added `org.apache.maven.plugins:maven-clean-plugin:2.5`
 * Added `org.apache.maven.plugins:maven-compiler-plugin:3.10.1`
 * Added `org.apache.maven.plugins:maven-deploy-plugin:2.7`

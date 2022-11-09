@@ -31,11 +31,10 @@
 | [Reproducible Build Maven Plugin][29]                   | [Apache 2.0][21]                               |
 | [Project keeper maven plugin][30]                       | [The MIT License][31]                          |
 | [Artifact reference checker and unifier][32]            | [MIT][33]                                      |
-| [Maven Assembly Plugin][34]                             | [The Apache Software License, Version 2.0][21] |
-| [Maven Clean Plugin][35]                                | [The Apache Software License, Version 2.0][21] |
-| [Maven Install Plugin][36]                              | [The Apache Software License, Version 2.0][21] |
-| [Maven Deploy Plugin][37]                               | [The Apache Software License, Version 2.0][21] |
-| [Maven Site Plugin 3][38]                               | [The Apache Software License, Version 2.0][21] |
+| [Maven Clean Plugin][34]                                | [The Apache Software License, Version 2.0][21] |
+| [Maven Install Plugin][35]                              | [The Apache Software License, Version 2.0][21] |
+| [Maven Deploy Plugin][36]                               | [The Apache Software License, Version 2.0][21] |
+| [Maven Site Plugin 3][37]                               | [The Apache Software License, Version 2.0][21] |
 
 [0]: https://github.com/exasol/exasol-testcontainers/
 [1]: https://github.com/exasol/exasol-testcontainers/blob/main/LICENSE
@@ -71,8 +70,7 @@
 [31]: https://github.com/exasol/project-keeper/blob/main/LICENSE
 [32]: https://github.com/exasol/artifact-reference-checker-maven-plugin
 [33]: https://opensource.org/licenses/MIT
-[34]: http://maven.apache.org/plugins/maven-assembly-plugin/
-[35]: http://maven.apache.org/plugins/maven-clean-plugin/
-[36]: http://maven.apache.org/plugins/maven-install-plugin/
-[37]: http://maven.apache.org/plugins/maven-deploy-plugin/
-[38]: http://maven.apache.org/plugins/maven-site-plugin/
+[34]: http://maven.apache.org/plugins/maven-clean-plugin/
+[35]: http://maven.apache.org/plugins/maven-install-plugin/
+[36]: http://maven.apache.org/plugins/maven-deploy-plugin/
+[37]: http://maven.apache.org/plugins/maven-site-plugin/
