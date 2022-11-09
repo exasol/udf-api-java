@@ -9,7 +9,7 @@ import java.sql.Timestamp;
  * <p>
  * Many of the interface functions in this class behave differently depending on whether they are used in the context of
  * a "SCALAR" or a "SET" UDF script. Please refer to the section
- * <a href="https://docs.exasol.com/db/latest/database_concepts/udf_scripts.htm"> "UDF Scripts" in the Exasol online
+ * <a href="https://docs.exasol.com/db/latest/database_concepts/udf_scripts.htm">"UDF Scripts" in the Exasol online
  * guide</a> for an explanation of the two different types.
  * </p>
  */
@@ -47,7 +47,7 @@ public interface ExaIterator {
      * 
      * </blockquote>
      *
-     * @return true, if there is a next row and the iterator was increased to it, false, if there is no more row for
+     * @return {@code true}, if there is a next row and the iterator was increased to it, {@code false}, if there is no more row for
      *         this group
      */
     public boolean next() throws ExaIterationException;
@@ -87,7 +87,7 @@ public interface ExaIterator {
      *
      * @param column index of the column, starting at 0
      *
-     * @return value of the specified column of the current row as an {@link Integer} object.
+     * @return value of the specified column of the current row as an {@link Integer} object or {@code null} if the column value is {@code NULL}
      */
     public Integer getInteger(int column) throws ExaIterationException, ExaDataTypeException;
 
@@ -99,7 +99,7 @@ public interface ExaIterator {
      *
      * @param name name of the column
      *
-     * @return value of the specified column of the current row as an {@link Integer} object.
+     * @return value of the specified column of the current row as an {@link Integer} object or {@code null} if the column value is {@code NULL}
      */
     public Integer getInteger(String name) throws ExaIterationException, ExaDataTypeException;
 
@@ -111,7 +111,7 @@ public interface ExaIterator {
      *
      * @param column index of the column, starting at 0
      *
-     * @return value of the specified column of the current row as a {@link Long} object.
+     * @return value of the specified column of the current row as a {@link Long} object or {@code null} if the column value is {@code NULL}
      */
     public Long getLong(int column) throws ExaIterationException, ExaDataTypeException;
 
@@ -123,7 +123,7 @@ public interface ExaIterator {
      *
      * @param name name of the column
      *
-     * @return value of the specified column of the current row as a {@link Long} object.
+     * @return value of the specified column of the current row as a {@link Long} object or {@code null} if the column value is {@code NULL}
      */
     public Long getLong(String name) throws ExaIterationException, ExaDataTypeException;
 
@@ -135,7 +135,7 @@ public interface ExaIterator {
      *
      * @param column index of the column, starting with 0
      *
-     * @return value of the specified column of the current row as a {@link BigDecimal} object.
+     * @return value of the specified column of the current row as a {@link BigDecimal} object or {@code null} if the column value is {@code NULL}
      */
     public BigDecimal getBigDecimal(int column) throws ExaIterationException, ExaDataTypeException;
 
@@ -147,7 +147,7 @@ public interface ExaIterator {
      *
      * @param name name of the column
      *
-     * @return value of the specified column of the current row as a {@link BigDecimal} object.
+     * @return value of the specified column of the current row as a {@link BigDecimal} object or {@code null} if the column value is {@code NULL}
      */
     public BigDecimal getBigDecimal(String name) throws ExaIterationException, ExaDataTypeException;
 
@@ -159,7 +159,7 @@ public interface ExaIterator {
      * 
      * @param column index of the column, starting with 0
      *
-     * @return value of the specified column of the current row as a {@link Double} object.
+     * @return value of the specified column of the current row as a {@link Double} object or {@code null} if the column value is {@code NULL}
      */
     public Double getDouble(int column) throws ExaIterationException, ExaDataTypeException;
 
@@ -171,7 +171,7 @@ public interface ExaIterator {
      *
      * @param name name of the column
      *
-     * @return value of the specified column of the current row as a {@link Double} object.
+     * @return value of the specified column of the current row as a {@link Double} object or {@code null} if the column value is {@code NULL}
      */
     public Double getDouble(String name) throws ExaIterationException, ExaDataTypeException;
 
@@ -183,7 +183,7 @@ public interface ExaIterator {
      *
      * @param column index of the column, starting with 0
      *
-     * @return value of the specified column of the current row as a {@link String} object.
+     * @return value of the specified column of the current row as a {@link String} object or {@code null} if the column value is {@code NULL}
      */
     public String getString(int column) throws ExaIterationException, ExaDataTypeException;
 
@@ -195,7 +195,7 @@ public interface ExaIterator {
      *
      * @param name name of the column
      *
-     * @return value of the specified column of the current row as a {@link String} object.
+     * @return value of the specified column of the current row as a {@link String} object or {@code null} if the column value is {@code NULL}
      */
     public String getString(String name) throws ExaIterationException, ExaDataTypeException;
 
@@ -207,7 +207,7 @@ public interface ExaIterator {
      *
      * @param column index of the column, starting with 0
      *
-     * @return value of the specified column of the current row as a {@link Boolean} object.
+     * @return value of the specified column of the current row as a {@link Boolean} object or {@code null} if the column value is {@code NULL}
      */
     public Boolean getBoolean(int column) throws ExaIterationException, ExaDataTypeException;
 
@@ -219,7 +219,7 @@ public interface ExaIterator {
      *
      * @param name name of the column
      *
-     * @return value of the specified column of the current row as a {@link Boolean} object.
+     * @return value of the specified column of the current row as a {@link Boolean} object or {@code null} if the column value is {@code NULL}
      */
     public Boolean getBoolean(String name) throws ExaIterationException, ExaDataTypeException;
 
@@ -231,7 +231,7 @@ public interface ExaIterator {
      *
      * @param column index of the column, starting with 0
      *
-     * @return value of the specified column of the current row as a {@link Date} object.
+     * @return value of the specified column of the current row as a {@link Date} object or {@code null} if the column value is {@code NULL}
      */
     public Date getDate(int column) throws ExaIterationException, ExaDataTypeException;
 
@@ -243,7 +243,7 @@ public interface ExaIterator {
      *
      * @param name name of the column
      *
-     * @return value of the specified column of the current row as a {@link Date} object.
+     * @return value of the specified column of the current row as a {@link Date} object or {@code null} if the column value is {@code NULL}
      */
     public Date getDate(String name) throws ExaIterationException, ExaDataTypeException;
 
@@ -255,7 +255,7 @@ public interface ExaIterator {
      *
      * @param name name of the column
      * 
-     * @return value of the specified column of the current row as a {@link Timestamp} object.
+     * @return value of the specified column of the current row as a {@link Timestamp} object or {@code null} if the column value is {@code NULL}
      */
     public Timestamp getTimestamp(String name) throws ExaIterationException, ExaDataTypeException;
 
@@ -267,7 +267,7 @@ public interface ExaIterator {
      *
      * @param column index of the column, starting with 0
      *
-     * @return value of the specified column of the current row as a {@link Object} object.
+     * @return value of the specified column of the current row as a {@link Object} object or {@code null} if the column value is {@code NULL}
      */
     public Object getObject(int column) throws ExaIterationException, ExaDataTypeException;
 
@@ -279,7 +279,7 @@ public interface ExaIterator {
      *
      * @param name name of the column
      *
-     * @return value of the specified column of the current row as a {@link Object} object.
+     * @return value of the specified column of the current row as a {@link Object} object or {@code null} if the column value is {@code NULL}
      */
     public Object getObject(String name) throws ExaIterationException, ExaDataTypeException;
 }

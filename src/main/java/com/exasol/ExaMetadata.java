@@ -61,7 +61,7 @@ public interface ExaMetadata {
     /**
      * If the script is executed in the context of a selected (aka. "open") schema, get the name of that schema.
      * 
-     * @return name of the current open schema
+     * @return name of the current open schema or {@code null} if no schema is selected
      */
     public String getCurrentSchema();
 
@@ -116,14 +116,14 @@ public interface ExaMetadata {
      * If this memory is exceeded, the database resource management will kill the JVM process.
      * </p>
      * 
-     * @return Memory limit for the current JVM process in bytes.
+     * @return memory limit for the current JVM process in bytes.
      */
     public BigInteger getMemoryLimit();
 
     /**
      * Get the type of the UDF script.
      * 
-     * @return input type of the script, either "SCALAR" or "SET"
+     * @return input type of the script, either {@code SCALAR} or {@code SET}
      */
     public String getInputType();
 
@@ -152,7 +152,7 @@ public interface ExaMetadata {
      * 
      * @param column index of the column, starting with 0
      * 
-     * @return Java class used to represent data from the specified column. .
+     * @return Java class used to represent data from the specified column
      */
     public Class<?> getInputColumnType(int column) throws ExaIterationException;
 
@@ -226,7 +226,7 @@ public interface ExaMetadata {
      *
      * @param column index of the column, starting with 0
      *
-     * @return the java class used to represent data from the specified output column.
+     * @return the java class used to represent data from the specified output column
      */
     public Class<?> getOutputColumnType(int column) throws ExaIterationException;
 
@@ -280,7 +280,7 @@ public interface ExaMetadata {
      * in the script code (see user manual).
      * </p>
      * 
-     * @param name The name of the script to be imported (context-sensitive)
+     * @param name The name of the script to be imported (case-sensitive)
      *
      * @return instance of the main script class of the imported script
      */

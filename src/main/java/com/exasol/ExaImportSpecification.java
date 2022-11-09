@@ -59,7 +59,7 @@ public interface ExaImportSpecification {
      * Get the name of the connection to be used for the import.
      * <p>
      * Use {@link ExaImportSpecification#hasConnectionName()} to find out if the connection was specified in the
-     * {@code IMPROT} statement.
+     * {@code IMPORT} statement.
      * </p>
      *
      * @return name of the connection, if one was specified or otherwise {@code null}

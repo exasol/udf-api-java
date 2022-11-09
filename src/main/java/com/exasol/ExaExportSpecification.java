@@ -42,7 +42,7 @@ public interface ExaExportSpecification {
      * The script can then obtain the connection information via {@link ExaMetadata#getConnection(String)}.
      * </p>
      *
-     * @return true, if connection information was provided
+     * @return {@code true}, if connection information was provided
      */
     public boolean hasConnectionInformation();
 
