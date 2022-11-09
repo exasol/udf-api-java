@@ -38,7 +38,7 @@ public interface ExaImportSpecification {
      * Use {@link ExaImportSpecification#isSubselect()} to check whether the import is part of a sub-select first.
      * </p>
      * <p>
-     * The types are returned in SQL format (e.g. {@codeVARCHAR(100)}).
+     * The types are returned in SQL format (e.g. {@code VARCHAR(100)}).
      * </p>
      *
      * @return List of names of the specified target columns or empty list
