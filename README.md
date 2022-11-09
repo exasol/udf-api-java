@@ -14,6 +14,14 @@
 [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=com.exasol%3Audf-api-java&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=com.exasol%3Audf-api-java)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=com.exasol%3Audf-api-java&metric=ncloc)](https://sonarcloud.io/dashboard?id=com.exasol%3Audf-api-java)
 
+This project contains the API required to build [User Defined Functions](https://docs.exasol.com/db/latest/database_concepts/udf_scripts.htm) (UDFs) for Exasol in the Java programming language.
+
+User Defined Functions extend Exasol with functions and scripts that can be called from within SQL statements.
+
+## Information for Users
+
+Please check out our [Java tutorials](https://github.com/exasol/exasol-java-tutorial) for examples of how to build, test and run Java UDFs.
+
 ## Additional Information
 
 * [Changelog](doc/changes/changelog.md)
