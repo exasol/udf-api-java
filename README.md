@@ -18,9 +18,10 @@ This project contains the API required to build [User Defined Functions](https:/
 
 User Defined Functions extend Exasol with functions and scripts that can be called from within SQL statements.
 
-## Information for Users
+## Information for API Users
 
-Please check out our [Java tutorials](https://github.com/exasol/exasol-java-tutorial) for examples of how to build, test and run Java UDFs.
+* [API documentation as JavaDoc](https://exasol.github.io/udf-api-java/javadoc/)
+* [Java tutorials](https://github.com/exasol/exasol-java-tutorial) with examples of how to build, test and run Java UDFs
 
 ## Additional Information
 

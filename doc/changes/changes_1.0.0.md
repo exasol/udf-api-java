@@ -6,10 +6,14 @@ Code name: Extracted UDF API from script-languages
 
 This is the first separate release of the UDF API. We extracted it from the project [script-languages release 2019-07-26](https://github.com/exasol/script-languages/releases/tag/20190726). Note that the API has been stable for a very long time and this extracted release did not change the API either. We just extracted it to enable a better way of releasing and distributing the API in the future.
 
+We also updated the JavaDoc. You can read the [JavaDoc online](https://exasol.github.io/udf-api-java/javadoc/).
+
 ## Refactoring
 
 * #1: Extracted UDF API from `script-languages`
+* #2: Added CI build
 * #5: Fixed JavaDoc and code smells
+* #7: Added integration test
 
 ## Dependency Updates
 
