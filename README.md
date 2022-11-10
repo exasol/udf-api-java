@@ -20,7 +20,7 @@ User Defined Functions extend Exasol with functions and scripts that can be call
 
 ## Information for API Users
 
-* [API documentation as JavaDoc](https://exasol.github.io/udf-api-java/javadoc/)
+* [API documentation as JavaDoc](https://exasol.github.io/udf-api-java/)
 * [Java tutorials](https://github.com/exasol/exasol-java-tutorial) with examples of how to build, test and run Java UDFs
 
 ## Additional Information

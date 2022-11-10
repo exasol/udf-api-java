@@ -9,10 +9,14 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - name: Publish JavaDoc
-        uses: MathieuSoysal/Javadoc-publisher.yml@v2.0.4
+      - name: Create JavaDoc
+        run: mvn javadoc:javadoc
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          javadoc-branch: javadoc
-          java-version: 17
-          target-folder: javadoc
+          branch: gh-pages
+          folder: target/site/apidocs
+          target-folder: .
+          clean: true
+          single-commit: true
+          force: true
