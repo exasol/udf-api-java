@@ -1,3 +1,5 @@
+package com.exasol.test;
+
 import com.exasol.containers.ExasolContainer;
 import com.exasol.dbbuilder.dialects.Schema;
 import com.exasol.dbbuilder.dialects.exasol.ExasolObjectFactory;
