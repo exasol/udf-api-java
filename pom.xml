@@ -10,6 +10,16 @@
     <name>Exasol UDF API for Java</name>
     <description>Interface between User Defined Functions (UDFs) written in Java and the Exasol database.</description>
     <url>https://github.com/exasol/udf-api-java/</url>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
     <dependencies>
         <dependency>
             <groupId>com.exasol</groupId>
