@@ -1,4 +1,4 @@
-# Exasol UDF API for Java 1.0.0, released 2022-11-09
+# Exasol UDF API for Java 1.0.0, released 2022-11-10
 
 Code name: Extracted UDF API from script-languages
 
