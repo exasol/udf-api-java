@@ -40,7 +40,7 @@ public interface ExaConnectionInformation {
      * Get the connection password.
      * 
      * @return password of the connection, i.e. the part that follows the {@code IDENTIFIED BY} keyword in the {@code
-     * CREATE CONNECTION command
+     * CREATE CONNECTION} command
      */
     public String getPassword();
 }
