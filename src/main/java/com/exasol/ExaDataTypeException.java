@@ -5,8 +5,39 @@ package com.exasol;
  */
 public class ExaDataTypeException extends Exception {
     private static final long serialVersionUID = 1L;
-    public ExaDataTypeException() { super(); }
-    public ExaDataTypeException(String message) { super(message); }
-    public ExaDataTypeException(String message, Throwable cause) { super(message, cause); }
-    public ExaDataTypeException(Throwable cause) { super(cause); }
+
+    /**
+     * Create a new instance of an {@link ExaDataTypeException}.
+     */
+    public ExaDataTypeException() {
+        super();
+    }
+
+    /**
+     * Create a new instance of an {@link ExaDataTypeException}.
+     *
+     * @param message error message
+     */
+    public ExaDataTypeException(String message) {
+        super(message);
+    }
+
+    /**
+     * Create a new instance of an {@link ExaDataTypeException}.
+     *
+     * @param message error message
+     * @param cause exception causing this one
+     */
+    public ExaDataTypeException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    /**
+     * Create a new instance of an {@link ExaDataTypeException}.
+     *
+     * @param cause exception causing this one
+     */
+    public ExaDataTypeException(Throwable cause) {
+        super(cause);
+    }
 }
