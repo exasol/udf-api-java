@@ -8,7 +8,7 @@ Release 1.0.1 adds the `module-info.java` for compatibility with the module syst
 
 ## Features
 
-* 11: Added `module-info.java`
+* #11: Added `module-info.java`
 
 ## Dependency Updates
 
