@@ -83,6 +83,8 @@ public interface ExaIterator {
      * 
      * </blockquote>
      *
+     * @param values values for output columns (number must match definition)
+     *
      * @throws ExaIterationException if object count mismatches
      * @throws ExaDataTypeException if provide object does not match output column type
      */
