@@ -140,6 +140,8 @@ public interface ExaMetadata {
      * @param column index of the column, starting with 0
      * 
      * @return name of the specified input column
+     * 
+     * @throws ExaIterationException if used with an invalid iterator position or index
      */
     public String getInputColumnName(int column) throws ExaIterationException;
 
@@ -153,6 +155,8 @@ public interface ExaMetadata {
      * @param column index of the column, starting with 0
      * 
      * @return Java class used to represent data from the specified column
+     *
+     * @throws ExaIterationException if used with an invalid iterator position or index
      */
     public Class<?> getInputColumnType(int column) throws ExaIterationException;
 
@@ -165,6 +169,8 @@ public interface ExaMetadata {
      * @param column index of the column, starting with 0
      *
      * @return sql type of the specified column
+     * 
+     * @throws ExaIterationException if used with an invalid iterator position or index
      */
     public String getInputColumnSqlType(int column) throws ExaIterationException;
 
@@ -174,6 +180,8 @@ public interface ExaMetadata {
      * @param column index of the column, starting with 0
      *
      * @return data type precision of the specified column, e.g. the precision of a {@code DECIMAL} data type
+     *
+     * @throws ExaIterationException if used with an invalid iterator position or index
      */
     public long getInputColumnPrecision(int column) throws ExaIterationException;
 
@@ -183,6 +191,8 @@ public interface ExaMetadata {
      * @param column index of the column, starting with 0
      *
      * @return data type scale of the specified column, e.g. the scale of a {@code DECIMAL} data type
+     *
+     * @throws ExaIterationException if used with an invalid iterator position or index
      */
     public long getInputColumnScale(int column) throws ExaIterationException;
 
@@ -192,6 +202,8 @@ public interface ExaMetadata {
      * @param column index of the column, starting with 0
      *
      * @return data type length of the specified column, e.g. the length of a {@code VARCHAR} data type.
+     *
+     * @throws ExaIterationException if used with an invalid iterator position or index
      */
     public long getInputColumnLength(int column) throws ExaIterationException;
 
@@ -215,6 +227,8 @@ public interface ExaMetadata {
      * @param column index of the column, starting with 0
      *
      * @return name of the specified output column
+     *
+     * @throws ExaIterationException if used with an invalid iterator position or index
      */
     public String getOutputColumnName(int column) throws ExaIterationException;
 
@@ -227,6 +241,8 @@ public interface ExaMetadata {
      * @param column index of the column, starting with 0
      *
      * @return the java class used to represent data from the specified output column
+     *
+     * @throws ExaIterationException if used with an invalid iterator position or index
      */
     public Class<?> getOutputColumnType(int column) throws ExaIterationException;
 
@@ -239,6 +255,8 @@ public interface ExaMetadata {
      * @param column index of the column, starting with 0
      *
      * @return sql type of the specified output column
+     *
+     * @throws ExaIterationException if used with an invalid iterator position or index
      */
     public String getOutputColumnSqlType(int column) throws ExaIterationException;
 
@@ -248,6 +266,8 @@ public interface ExaMetadata {
      * @param column index of the column, starting with 0
      *
      * @return data type precision of the specified output column, e.g. the precision of a {@code DECIMAL} data type
+     *
+     * @throws ExaIterationException if used with an invalid iterator position or index
      */
     public long getOutputColumnPrecision(int column) throws ExaIterationException;
 
@@ -257,6 +277,8 @@ public interface ExaMetadata {
      * @param column index of the column, starting with 0
      *
      * @return data type scale of the specified output column, e.g. the scale of a {@code DECIMAL} data type
+     *
+     * @throws ExaIterationException if used with an invalid iterator position or index
      */
     public long getOutputColumnScale(int column) throws ExaIterationException;
 
@@ -266,6 +288,8 @@ public interface ExaMetadata {
      * @param column index of the column, starting with 0
      *
      * @return data type length of the specified column, e.g. the length of a {@code VARCHAR} data type
+     *
+     * @throws ExaIterationException if used with an invalid iterator position or index
      */
     public long getOutputColumnLength(int column) throws ExaIterationException;
 
@@ -283,6 +307,9 @@ public interface ExaMetadata {
      * @param name The name of the script to be imported (case-sensitive)
      *
      * @return instance of the main script class of the imported script
+     * 
+     * @throws ExaCompilationException if the script cannot be compiled (e.g. because of syntax errors)
+     * @throws ClassNotFoundException  if the script entry class is not found
      */
     public Class<?> importScript(String name) throws ExaCompilationException, ClassNotFoundException;
 
@@ -295,8 +322,11 @@ public interface ExaMetadata {
      * </p>
      *
      * @param name name of the connection
+     * 
      * @return an ExaConnectionInformation instance holding all information of the connection
+     * 
+     * @throws ExaConnectionAccessException if the connection object is not accessible (e.g. in cas of missing
+     *                                      permissions)
      */
     public ExaConnectionInformation getConnection(String name) throws ExaConnectionAccessException;
-
 }

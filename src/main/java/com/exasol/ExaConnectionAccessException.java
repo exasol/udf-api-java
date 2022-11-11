@@ -6,6 +6,7 @@ package com.exasol;
  */
 public class ExaConnectionAccessException extends Exception {
     private static final long serialVersionUID = 1L;
+    /** @serial Message without connection exception prefix. */
     private final String message;
 
     /**
