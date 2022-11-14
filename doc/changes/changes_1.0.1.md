@@ -6,9 +6,10 @@ Code name: Added missing `getTimestamp` method
 
 The interface method `getTimestamp(int column)` in class `ExaIterator` got lost during migration. 
 
-## Features
+## Bugfixes
 
 * #16: Added missing interface method
+
 ## Dependency Updates
 
 ### Compile Dependency Updates
