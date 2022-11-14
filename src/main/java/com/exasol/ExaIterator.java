@@ -321,7 +321,7 @@ public interface ExaIterator {
      * </p>
      *
      * @param name name of the column
-     * 
+     *
      * @return value of the specified column of the current row as a {@link Timestamp} object or {@code null} if the
      *         column value is {@code NULL}
      *
@@ -329,6 +329,22 @@ public interface ExaIterator {
      * @throws ExaDataTypeException if requesting a value of an incompatible data type
      */
     public Timestamp getTimestamp(String name) throws ExaIterationException, ExaDataTypeException;
+
+    /**
+     * Get the value of the column with the given name as {@link Timestamp}.
+     * <p>
+     * This can be used for the SQL data type {@code TIMESTAMP}.
+     * </p>
+     *
+     * @param column index of the column, starting with 0
+     *
+     * @return value of the specified column of the current row as a {@link Timestamp} object or {@code null} if the column
+     *         value is {@code NULL}
+     *
+     * @throws ExaIterationException if used with invalid iterator position
+     * @throws ExaDataTypeException if requesting a value of an incompatible data type
+     */
+    public Timestamp getTimestamp(int column) throws ExaIterationException, ExaDataTypeException;
 
     /**
      * Get the value of the column at the given index as {@link Object}.
