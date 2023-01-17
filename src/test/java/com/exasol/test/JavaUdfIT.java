@@ -158,7 +158,7 @@ class JavaUdfIT {
 
     private static void assertQueryResult(final String sql, final ResultSetStructureMatcher.Builder rowMatcher) {
         try (final Statement statement = connection.createStatement();
-             final ResultSet result = statement.executeQuery(sql)) {
+            final ResultSet result = statement.executeQuery(sql)) {
             assertThat(result, rowMatcher.matches());
         } catch (final SQLException exception) {
             throw new AssertionError("Unable to assert result of statement: " + sql, exception);
@@ -175,6 +175,7 @@ class JavaUdfIT {
                 + "/\n\n");
         assertQueryResult("SELECT "+ fullyQualifiedScriptName + "()", table().row(1L));
     }
+
     @Test
     void testGetSizeFromSetScript() {
         final String scriptName = "SIZE_IN_SET_CONTEXT";

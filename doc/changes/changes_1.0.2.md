@@ -6,7 +6,7 @@ Code name: `size()` method
 
 In this release we documented the `size()` method and added integration tests for it.
 
-We also updated dependencies.
+We also updated test dependencies.
 
 ## Features
 

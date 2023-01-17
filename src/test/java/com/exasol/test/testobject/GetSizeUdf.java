@@ -9,7 +9,7 @@ import com.exasol.ExaMetadata;
  * <p>
  * The class mainly exists to force building against the API provided in this project. If you wrote inline UDFs, they
  * would be compiled <i>inside</i> the database, using the API that is provided in the language container instead of
- * this one. That means that you would not get compiler errors even if the APi in this project is broken (e.g. when
+ * this one. That means that you would not get compiler errors even if the API in this project is broken (e.g. when
  * interface methods are missing.
  * </p>
  */
