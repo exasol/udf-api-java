@@ -150,7 +150,7 @@ class JavaUdfIT {
                 + "(V TIMESTAMP) RETURNS VARCHAR(2000) AS\n" //
                 + "    " + JAR_INCLUDE_DIRECTIVE + ";\n" //
                 + "    %scriptclass com.exasol.test.testobject.GetTimestampUdf;\n" //
-                + "/\n\n");
+                + "/\n");
         assertQueryResult("SELECT " + fullyQualifiedScriptName + "(T.V)" + //
                 "FROM VALUES (TO_TIMESTAMP('" + date + "T" + time + "Z', 'YYYY-MM-DDTHH24:MI:SS.FF3Z')) AS T(V)", //
                 table().row(date + " " + time));
@@ -172,7 +172,7 @@ class JavaUdfIT {
         executeStatement("CREATE JAVA SCALAR SCRIPT " + fullyQualifiedScriptName + "() RETURNS INTEGER AS\n" //
                 + "    " + JAR_INCLUDE_DIRECTIVE + ";\n" //
                 + "    %scriptclass com.exasol.test.testobject.GetSizeUdf;\n" //
-                + "/\n\n");
+                + "/\n");
         assertQueryResult("SELECT "+ fullyQualifiedScriptName + "()", table().row(1L));
     }
 
@@ -183,7 +183,7 @@ class JavaUdfIT {
         executeStatement("CREATE JAVA SET SCRIPT " + fullyQualifiedScriptName + "(COL CHAR(1)) RETURNS INTEGER AS\n" //
                 + "    " + JAR_INCLUDE_DIRECTIVE + ";\n" //
                 + "    %scriptclass com.exasol.test.testobject.GetSizeUdf;\n" //
-                + "/\n\n");
+                + "/\n");
         assertQueryResult("SELECT "+ fullyQualifiedScriptName + "(v) FROM VALUES ('a'), ('b'), ('c') AS v(v)", //
                 table().row(3L));
     }

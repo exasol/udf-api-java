@@ -1,4 +1,4 @@
-# Exasol UDF API for Java 1.0.2, released 2023-??-??
+# Exasol UDF API for Java 1.0.2, released 2023-01-17
 
 Code name: `size()` method
 
