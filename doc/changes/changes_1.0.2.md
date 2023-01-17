@@ -16,7 +16,7 @@ We also updated test dependencies.
 
 ### Test Dependency Updates
 
-* Updated `com.exasol:exasol-testcontainers:6.3.1` to `6.4.1`
+* Updated `com.exasol:exasol-testcontainers:6.3.1` to `6.5.0`
 * Updated `org.junit.jupiter:junit-jupiter-engine:5.9.1` to `5.9.2`
 * Updated `org.junit.jupiter:junit-jupiter-params:5.9.1` to `5.9.2`
 * Updated `org.mockito:mockito-junit-jupiter:4.8.1` to `5.0.0`
