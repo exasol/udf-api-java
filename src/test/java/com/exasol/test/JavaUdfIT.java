@@ -5,6 +5,7 @@ import com.exasol.bucketfs.BucketAccessException;
 import com.exasol.containers.ExasolContainer;
 import com.exasol.dbbuilder.dialects.Schema;
 import com.exasol.dbbuilder.dialects.exasol.ExasolObjectFactory;
+import com.exasol.matcher.ResultSetStructureMatcher;
 import com.exasol.mavenprojectversiongetter.MavenProjectVersionGetter;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -150,13 +151,39 @@ class JavaUdfIT {
                 + "    " + JAR_INCLUDE_DIRECTIVE + ";\n" //
                 + "    %scriptclass com.exasol.test.testobject.GetTimestampUdf;\n" //
                 + "/\n\n");
+        assertQueryResult("SELECT " + fullyQualifiedScriptName + "(T.V)" + //
+                "FROM VALUES (TO_TIMESTAMP('" + date + "T" + time + "Z', 'YYYY-MM-DDTHH24:MI:SS.FF3Z')) AS T(V)", //
+                table().row(date + " " + time));
+    }
+
+    private static void assertQueryResult(final String sql, final ResultSetStructureMatcher.Builder rowMatcher) {
         try (final Statement statement = connection.createStatement();
-                final ResultSet result = statement
-                        .executeQuery("SELECT " + fullyQualifiedScriptName + "(T.V)" + "FROM VALUES (TO_TIMESTAMP('"
-                                + date + "T" + time + "Z', 'YYYY-MM-DDTHH24:MI:SS.FF3Z')) AS T(V)")) {
-            assertThat(result, table().row(date + " " + time).matches());
+             final ResultSet result = statement.executeQuery(sql)) {
+            assertThat(result, rowMatcher.matches());
         } catch (final SQLException exception) {
-            throw new AssertionError(exception);
+            throw new AssertionError("Unable to assert result of statement: " + sql, exception);
         }
+    }
+
+    @Test
+    void testGetSizeFromScalarScript() {
+        final String scriptName = "SIZE_IN_SCALAR_CONTEXT";
+        final String fullyQualifiedScriptName = getFullyQualifiedScriptName(schema, scriptName);
+        executeStatement("CREATE JAVA SCALAR SCRIPT " + fullyQualifiedScriptName + "() RETURNS INTEGER AS\n" //
+                + "    " + JAR_INCLUDE_DIRECTIVE + ";\n" //
+                + "    %scriptclass com.exasol.test.testobject.GetSizeUdf;\n" //
+                + "/\n\n");
+        assertQueryResult("SELECT "+ fullyQualifiedScriptName + "()", table().row(1L));
+    }
+    @Test
+    void testGetSizeFromSetScript() {
+        final String scriptName = "SIZE_IN_SET_CONTEXT";
+        final String fullyQualifiedScriptName = getFullyQualifiedScriptName(schema, scriptName);
+        executeStatement("CREATE JAVA SET SCRIPT " + fullyQualifiedScriptName + "(COL CHAR(1)) RETURNS INTEGER AS\n" //
+                + "    " + JAR_INCLUDE_DIRECTIVE + ";\n" //
+                + "    %scriptclass com.exasol.test.testobject.GetSizeUdf;\n" //
+                + "/\n\n");
+        assertQueryResult("SELECT "+ fullyQualifiedScriptName + "(v) FROM VALUES ('a'), ('b'), ('c') AS v(v)", //
+                table().row(3L));
     }
 }
