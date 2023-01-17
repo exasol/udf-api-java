@@ -20,12 +20,13 @@ public interface ExaIterator {
      * If this is a "SET" UDF script, this method returns the number of rows for the current group.
      * </p>
      * <p>
-     * If this is a "SCALAR" UDF script, it will return the total number of rows to be processed by this JVM instance.
+     * If this is a "SCALAR" UDF script, it always returns one. The logic behind this is that the input to a scalar
+     * script is a single row.
      * </p>
      *
      * @return number of input rows for this script.
      *
-     * @throws ExaIterationException size is not available
+     * @throws ExaIterationException if size is not available
      */
     public long size() throws ExaIterationException;
 
@@ -40,10 +41,10 @@ public interface ExaIterator {
      * The following code can be used to process all rows of a group: <blockquote>
      * 
      * <pre>
-     * public static void run(ExaMetadata meta, ExaIterator iter) throws Exception {
+     * public static void run(ExaMetadata meta, ExaIterator iterator) throws Exception {
      *     do {
-     *         // access data here, e.g. with iter.getString("MY_COLUMN");
-     *     } while (iter.next());
+     *         // access data here, e.g. with iterator.getString("MY_COLUMN");
+     *     } while (iterator.next());
      * }
      * </pre>
      * 
@@ -77,8 +78,8 @@ public interface ExaIterator {
      * <blockquote>
      * 
      * <pre>
-     * iter.emit(1, "a");
-     * iter.emit(new Object[] { 1, "a" });
+     * iterator.emit(1, "a");
+     * iterator.emit(new Object[] { 1, "a" });
      * </pre>
      * 
      * </blockquote>
