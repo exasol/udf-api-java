@@ -1,10 +1,10 @@
-# Exasol UDF API for Java 1.0.3, released 2023-??-??
+# Exasol UDF API for Java 1.0.3, released 2023-09-25
 
 Code name: Fix CVE-2023-42503
 
 ## Summary
 
-This release fixes CVE-2023-42503 in `org.apache.commons:commons-compress`
+This release fixes CVE-2023-42503 in `org.apache.commons:commons-compress` by upgrading dependencies.
 
 ## Security
 
