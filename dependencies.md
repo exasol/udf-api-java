@@ -42,18 +42,17 @@
 | [error-code-crawler-maven-plugin][37]                   | [MIT License][38]                              |
 | [Reproducible Build Maven Plugin][39]                   | [Apache 2.0][23]                               |
 | [Project keeper maven plugin][40]                       | [The MIT License][41]                          |
-| [Artifact reference checker and unifier][42]            | [MIT][43]                                      |
-| [Apache Maven JAR Plugin][44]                           | [Apache License, Version 2.0][19]              |
-| [Maven Clean Plugin][45]                                | [The Apache Software License, Version 2.0][23] |
-| [Maven Resources Plugin][46]                            | [The Apache Software License, Version 2.0][23] |
-| [Maven Install Plugin][47]                              | [The Apache Software License, Version 2.0][23] |
-| [Maven Site Plugin 3][48]                               | [The Apache Software License, Version 2.0][23] |
+| [Apache Maven JAR Plugin][42]                           | [Apache License, Version 2.0][19]              |
+| [Maven Clean Plugin][43]                                | [The Apache Software License, Version 2.0][23] |
+| [Maven Resources Plugin][44]                            | [The Apache Software License, Version 2.0][23] |
+| [Maven Install Plugin][45]                              | [The Apache Software License, Version 2.0][23] |
+| [Maven Site Plugin 3][46]                               | [The Apache Software License, Version 2.0][23] |
 
 [0]: https://github.com/exasol/maven-project-version-getter/
 [1]: https://github.com/exasol/maven-project-version-getter/blob/main/LICENSE
 [2]: https://github.com/exasol/exasol-testcontainers/
 [3]: https://github.com/exasol/exasol-testcontainers/blob/main/LICENSE
-[4]: https://testcontainers.org
+[4]: https://java.testcontainers.org
 [5]: http://opensource.org/licenses/MIT
 [6]: https://github.com/exasol/test-db-builder-java/
 [7]: https://github.com/exasol/test-db-builder-java/blob/main/LICENSE
@@ -91,10 +90,8 @@
 [39]: http://zlika.github.io/reproducible-build-maven-plugin
 [40]: https://github.com/exasol/project-keeper/
 [41]: https://github.com/exasol/project-keeper/blob/main/LICENSE
-[42]: https://github.com/exasol/artifact-reference-checker-maven-plugin
-[43]: https://opensource.org/licenses/MIT
-[44]: https://maven.apache.org/plugins/maven-jar-plugin/
-[45]: http://maven.apache.org/plugins/maven-clean-plugin/
-[46]: http://maven.apache.org/plugins/maven-resources-plugin/
-[47]: http://maven.apache.org/plugins/maven-install-plugin/
-[48]: http://maven.apache.org/plugins/maven-site-plugin/
+[42]: https://maven.apache.org/plugins/maven-jar-plugin/
+[43]: http://maven.apache.org/plugins/maven-clean-plugin/
+[44]: http://maven.apache.org/plugins/maven-resources-plugin/
+[45]: http://maven.apache.org/plugins/maven-install-plugin/
+[46]: http://maven.apache.org/plugins/maven-site-plugin/
