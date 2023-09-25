@@ -1,7 +1,7 @@
 # Exasol UDF API for Java
 
 [![Build Status](https://github.com/exasol/udf-api-java/actions/workflows/ci-build.yml/badge.svg)](https://github.com/exasol/udf-api-java/actions/workflows/ci-build.yml)
-[![Maven Central – Exasol UDF API for Java](https://img.shields.io/maven-central/v/com.exasol/udf-api-java)](https://search.maven.org/artifact/com.exasol/udf-api-java)
+[![Maven Central &ndash; Exasol UDF API for Java](https://img.shields.io/maven-central/v/com.exasol/udf-api-java)](https://search.maven.org/artifact/com.exasol/udf-api-java)
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=com.exasol%3Audf-api-java&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.exasol%3Audf-api-java)
 
