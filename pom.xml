@@ -62,6 +62,7 @@
             <groupId>com.exasol</groupId>
             <artifactId>maven-project-version-getter</artifactId>
             <version>1.2.0</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     <build>
