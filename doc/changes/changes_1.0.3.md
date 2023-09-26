@@ -12,14 +12,20 @@ This release fixes CVE-2023-42503 in `org.apache.commons:commons-compress` by up
 
 ## Dependency Updates
 
+### Compile Dependency Updates
+
+* Removed `com.exasol:maven-project-version-getter:1.2.0`
+
 ### Test Dependency Updates
 
 * Updated `com.exasol:exasol-testcontainers:6.5.0` to `6.6.2`
 * Updated `com.exasol:hamcrest-resultset-matcher:1.5.2` to `1.6.0`
+* Added `com.exasol:maven-project-version-getter:1.2.0`
 * Updated `com.exasol:test-db-builder-java:3.4.1` to `3.5.0`
 * Updated `org.junit.jupiter:junit-jupiter-engine:5.9.2` to `5.10.0`
 * Updated `org.junit.jupiter:junit-jupiter-params:5.9.2` to `5.10.0`
 * Updated `org.mockito:mockito-junit-jupiter:5.0.0` to `5.5.0`
+* Added `org.slf4j:slf4j-jdk14:2.0.9`
 * Updated `org.testcontainers:junit-jupiter:1.17.6` to `1.19.0`
 
 ### Plugin Dependency Updates
