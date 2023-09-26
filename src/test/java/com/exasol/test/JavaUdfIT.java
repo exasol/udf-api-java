@@ -91,7 +91,7 @@ class JavaUdfIT {
 
     @CsvSource({ //
             "getDatabaseName, DB1", //
-            "getDatabaseVersion, 7\\.1\\.15", //
+            "getDatabaseVersion, 7\\.1\\.23", //
             "getNodeCount, 1", //
             "getOutputType, RETURN", //
             "getScopeUser, SYS", //
