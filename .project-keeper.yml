@@ -4,5 +4,8 @@ sources:
     modules:
       - maven_central
       - integration_tests
-
-linkReplacements:
+build:
+  runnerOs: ubuntu-20.04
+  exasolDbVersions:
+    - "8.23.1"
+    - "7.1.24"
