@@ -1,5 +1,21 @@
 package com.exasol.test;
 
+import static com.exasol.matcher.ResultSetStructureMatcher.table;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.matchesPattern;
+
+import java.io.FileNotFoundException;
+import java.nio.file.Path;
+import java.sql.*;
+import java.util.concurrent.TimeoutException;
+import java.util.logging.Logger;
+
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
+
 import com.exasol.bucketfs.Bucket;
 import com.exasol.bucketfs.BucketAccessException;
 import com.exasol.containers.ExasolContainer;
@@ -7,26 +23,6 @@ import com.exasol.dbbuilder.dialects.Schema;
 import com.exasol.dbbuilder.dialects.exasol.ExasolObjectFactory;
 import com.exasol.matcher.ResultSetStructureMatcher;
 import com.exasol.mavenprojectversiongetter.MavenProjectVersionGetter;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
-
-import java.io.FileNotFoundException;
-import java.nio.file.Path;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.concurrent.TimeoutException;
-import java.util.logging.Logger;
-
-import static com.exasol.matcher.ResultSetStructureMatcher.table;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
 
 /**
  * This is an integration test that uses a JAR built from classes under test with the API that is the main test subject.
@@ -46,12 +42,8 @@ import static org.hamcrest.Matchers.*;
 @Testcontainers
 class JavaUdfIT {
     @Container
-    private static final ExasolContainer<? extends ExasolContainer<?>> EXASOL;
-    static {
-        try(final ExasolContainer<? extends ExasolContainer<?>> container = new ExasolContainer<>()) {
-            EXASOL = container.withReuse(true);
-        }
-    }
+    private static final ExasolContainer<? extends ExasolContainer<?>> EXASOL = new ExasolContainer<>("8.23.1")
+            .withReuse(true);
     private static final Logger LOGGER = Logger.getLogger(JavaUdfIT.class.getName());
     private static final String PROJECT_VERSION = MavenProjectVersionGetter.getCurrentProjectVersion();
     private static final String UDF_UNDER_TEST_JAR = "udf-api-java-" + PROJECT_VERSION + "-tests.jar";
@@ -69,14 +61,13 @@ class JavaUdfIT {
         copyUdfUnderTestToDefaultBucket();
     }
 
-    private static void copyUdfUnderTestToDefaultBucket()
-            throws BucketAccessException, FileNotFoundException {
+    private static void copyUdfUnderTestToDefaultBucket() throws BucketAccessException, FileNotFoundException {
         final Bucket bucket = EXASOL.getDefaultBucket();
         LOGGER.info("Copying test UDF '" + UDF_UNDER_TEST_JAR_PATH + "' to '" + UDF_UNDER_TEST_JAR + "' in bucket '"
                 + bucket + "'");
         try {
             bucket.uploadFile(UDF_UNDER_TEST_JAR_PATH, UDF_UNDER_TEST_JAR);
-        } catch (TimeoutException exception) {
+        } catch (final TimeoutException exception) {
             Thread.currentThread().interrupt();
             throw new RuntimeException("Got interrupted trying to install UDF under test.", exception);
         }
@@ -91,7 +82,7 @@ class JavaUdfIT {
 
     @CsvSource({ //
             "getDatabaseName, DB1", //
-            "getDatabaseVersion, 7\\.1\\.23", //
+            "getDatabaseVersion, \\d\\.\\d\\d?\\.\\d\\d?", //
             "getNodeCount, 1", //
             "getOutputType, RETURN", //
             "getScopeUser, SYS", //
@@ -131,8 +122,8 @@ class JavaUdfIT {
 
     private String executeScalarScriptWithStringReturn(final String fullyQualifiedScriptName, final String methodName) {
         try (final Statement statement = connection.createStatement();
-                final ResultSet result = statement.executeQuery("SELECT " + fullyQualifiedScriptName + "('" +
-                        methodName + "')")) {
+                final ResultSet result = statement
+                        .executeQuery("SELECT " + fullyQualifiedScriptName + "('" + methodName + "')")) {
             result.next();
             return result.getString(1);
         } catch (final SQLException exception) {
@@ -158,7 +149,7 @@ class JavaUdfIT {
 
     private static void assertQueryResult(final String sql, final ResultSetStructureMatcher.Builder rowMatcher) {
         try (final Statement statement = connection.createStatement();
-            final ResultSet result = statement.executeQuery(sql)) {
+                final ResultSet result = statement.executeQuery(sql)) {
             assertThat(result, rowMatcher.matches());
         } catch (final SQLException exception) {
             throw new AssertionError("Unable to assert result of statement: " + sql, exception);
@@ -173,7 +164,7 @@ class JavaUdfIT {
                 + "    " + JAR_INCLUDE_DIRECTIVE + ";\n" //
                 + "    %scriptclass com.exasol.test.testobject.GetSizeUdf;\n" //
                 + "/\n");
-        assertQueryResult("SELECT "+ fullyQualifiedScriptName + "()", table().row(1L));
+        assertQueryResult("SELECT " + fullyQualifiedScriptName + "()", table().row(1L));
     }
 
     @Test
@@ -184,7 +175,7 @@ class JavaUdfIT {
                 + "    " + JAR_INCLUDE_DIRECTIVE + ";\n" //
                 + "    %scriptclass com.exasol.test.testobject.GetSizeUdf;\n" //
                 + "/\n");
-        assertQueryResult("SELECT "+ fullyQualifiedScriptName + "(v) FROM VALUES ('a'), ('b'), ('c') AS v(v)", //
+        assertQueryResult("SELECT " + fullyQualifiedScriptName + "(v) FROM VALUES ('a'), ('b'), ('c') AS v(v)", //
                 table().row(3L));
     }
 }
