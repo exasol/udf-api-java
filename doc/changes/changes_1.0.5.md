@@ -4,7 +4,7 @@ Code name: Fix CVE-2024-26308 and CVE-2024-25710 in test dependency
 
 ## Summary
 
-We fixed CVE-2024-26308 and CVE-2024-25710 by updating the transitive test dependency org.apache.`commons:commons-compress` (was 1.24.0) through updating to `exasol-testcontainers` 7.0.1.
+We fixed CVE-2024-26308 and CVE-2024-25710 by updating the transitive test dependency `org.apache.commons:commons-compress` (was 1.24.0) through updating to `exasol-testcontainers` 7.0.1.
 
 Please note that the actual UDF API remains unchanged.
 
