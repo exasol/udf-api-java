@@ -1,4 +1,4 @@
-# Exasol UDF API for Java 1.0.5, released 2024-02-22
+# Exasol UDF API for Java 1.0.5, released 2024-02-23
 
 Code name: Fix CVE-2024-26308 and CVE-2024-25710 in test dependency
 
