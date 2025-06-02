@@ -9,6 +9,8 @@ This release is a security update. We updated the dependencies of the project to
 We also added an exception for the OSSIndex for CVE-2024-55551, which is a false positive in Exasol's JDBC driver.
 This issue has been fixed quite a while back now, but the OSSIndex unfortunately does not contain the fix version of 24.2.1 (2024-12-10) set.
 
+We also updated the CI build to Ubuntu runner 24.04 and removed Exasol 7.1 from the matrix build.
+
 ## Features
 
 * #28: Security updates on top of 1.0.5
