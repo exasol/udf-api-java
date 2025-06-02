@@ -24,7 +24,8 @@ We also updated the CI build to Ubuntu runner 24.04 and removed Exasol 7.1 from 
 * Updated `com.exasol:maven-project-version-getter:1.2.0` to `1.2.1`
 * Updated `com.exasol:test-db-builder-java:3.5.3` to `3.6.1`
 * Updated `org.hamcrest:hamcrest:2.2` to `3.0`
-* Updated `org.junit.jupiter:junit-jupiter-engine:5.10.2` to `5.13.0`
+* Added `org.junit.jupiter:junit-jupiter-api:5.13.0`
+* Removed `org.junit.jupiter:junit-jupiter-engine:5.10.2`
 * Updated `org.junit.jupiter:junit-jupiter-params:5.10.2` to `5.13.0`
 * Updated `org.mockito:mockito-junit-jupiter:5.10.0` to `5.18.0`
 * Updated `org.slf4j:slf4j-jdk14:2.0.12` to `2.0.17`

@@ -9,7 +9,7 @@
 | [Testcontainers :: JUnit Jupiter Extension][2] | [MIT][3]                         |
 | [Test Database Builder for Java][4]            | [MIT License][5]                 |
 | [Matcher for SQL Result Sets][6]               | [MIT License][7]                 |
-| [JUnit Jupiter Engine][8]                      | [Eclipse Public License v2.0][9] |
+| [JUnit Jupiter API][8]                         | [Eclipse Public License v2.0][9] |
 | [JUnit Jupiter Params][8]                      | [Eclipse Public License v2.0][9] |
 | [Hamcrest][10]                                 | [BSD-3-Clause][11]               |
 | [mockito-junit-jupiter][12]                    | [MIT][13]                        |
