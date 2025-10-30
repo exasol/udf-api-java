@@ -13,6 +13,7 @@ import com.exasol.ExaMetadata;
  * </p>
  */
 public class GetTimestampUdf {
+    @SuppressWarnings("java:S1172") // Exasol UDF interface requires this signature
     public static String run(final ExaMetadata metadata, final ExaIterator context) throws Exception {
         // Enforce conversion to String. This saves us timezone handling, a feature that is not the focus of this test.
         return "" + context.getTimestamp(0);

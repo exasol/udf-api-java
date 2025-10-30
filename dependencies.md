@@ -9,7 +9,6 @@
 | [Testcontainers :: JUnit Jupiter Extension][2] | [MIT][3]                         |
 | [Test Database Builder for Java][4]            | [MIT License][5]                 |
 | [Matcher for SQL Result Sets][6]               | [MIT License][7]                 |
-| [JUnit Jupiter API][8]                         | [Eclipse Public License v2.0][9] |
 | [JUnit Jupiter Params][8]                      | [Eclipse Public License v2.0][9] |
 | [Hamcrest][10]                                 | [BSD-3-Clause][11]               |
 | [mockito-junit-jupiter][12]                    | [MIT][13]                        |
@@ -28,7 +27,7 @@
 | [Apache Maven Toolchains Plugin][25]                    | [Apache-2.0][19]                            |
 | [Apache Maven Compiler Plugin][26]                      | [Apache-2.0][19]                            |
 | [Apache Maven Enforcer Plugin][27]                      | [Apache-2.0][19]                            |
-| [Maven Flatten Plugin][28]                              | [Apache Software Licenese][19]              |
+| [Maven Flatten Plugin][28]                              | [Apache Software License][19]               |
 | [Project Keeper Maven plugin][29]                       | [The MIT License][30]                       |
 | [Apache Maven JAR Plugin][31]                           | [Apache-2.0][19]                            |
 | [org.sonatype.ossindex.maven:ossindex-maven-plugin][32] | [ASL2][33]                                  |
@@ -55,7 +54,7 @@
 [5]: https://github.com/exasol/test-db-builder-java/blob/main/LICENSE
 [6]: https://github.com/exasol/hamcrest-resultset-matcher/
 [7]: https://github.com/exasol/hamcrest-resultset-matcher/blob/main/LICENSE
-[8]: https://junit.org/junit5/
+[8]: https://junit.org/
 [9]: https://www.eclipse.org/legal/epl-v20.html
 [10]: http://hamcrest.org/JavaHamcrest/
 [11]: https://raw.githubusercontent.com/hamcrest/JavaHamcrest/master/LICENSE

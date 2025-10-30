@@ -42,7 +42,8 @@ import com.exasol.mavenprojectversiongetter.MavenProjectVersionGetter;
 @Testcontainers
 class JavaUdfIT {
     @Container
-    private static final ExasolContainer<? extends ExasolContainer<?>> EXASOL = new ExasolContainer<>("8.23.1")
+    @SuppressWarnings("resource") // Will be closed by @Container annotation
+    private static final ExasolContainer<? extends ExasolContainer<?>> EXASOL = new ExasolContainer<>()
             .withReuse(true);
     private static final Logger LOGGER = Logger.getLogger(JavaUdfIT.class.getName());
     private static final String PROJECT_VERSION = MavenProjectVersionGetter.getCurrentProjectVersion();
@@ -54,7 +55,7 @@ class JavaUdfIT {
     private static Schema schema;
 
     @BeforeAll
-    static void beforeAll() throws SQLException, BucketAccessException, FileNotFoundException {
+    static void beforeAll() throws BucketAccessException, FileNotFoundException {
         connection = EXASOL.createConnection();
         final ExasolObjectFactory factory = new ExasolObjectFactory(connection);
         schema = factory.createSchema("CONTEXT_SCHEMA");
@@ -82,7 +83,7 @@ class JavaUdfIT {
 
     @CsvSource({ //
             "getDatabaseName, DB1", //
-            "getDatabaseVersion, \\d\\.\\d\\d?\\.\\d\\d?", //
+            "getDatabaseVersion, \\d+\\.\\d+\\.\\d+", //
             "getNodeCount, 1", //
             "getOutputType, RETURN", //
             "getScopeUser, SYS", //
@@ -94,7 +95,7 @@ class JavaUdfIT {
     void testGetDatabaseContextInformation(final String methodName, final String expectedResult) {
         final String fullyQualifiedScriptName = createContextMethodTestScript(schema, methodName);
         final String value = executeScalarScriptWithStringReturn(fullyQualifiedScriptName, methodName);
-        assertThat(value, matchesPattern(expectedResult));
+        assertThat("Result of method " + methodName + "()", value, matchesPattern(expectedResult));
     }
 
     private String createContextMethodTestScript(final Schema schema, final String methodName) {
