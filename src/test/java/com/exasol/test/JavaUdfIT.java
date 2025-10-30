@@ -55,7 +55,7 @@ class JavaUdfIT {
     private static Schema schema;
 
     @BeforeAll
-    static void beforeAll() throws SQLException, BucketAccessException, FileNotFoundException {
+    static void beforeAll() throws BucketAccessException, FileNotFoundException {
         connection = EXASOL.createConnection();
         final ExasolObjectFactory factory = new ExasolObjectFactory(connection);
         schema = factory.createSchema("CONTEXT_SCHEMA");
