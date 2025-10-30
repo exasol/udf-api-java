@@ -42,7 +42,8 @@ import com.exasol.mavenprojectversiongetter.MavenProjectVersionGetter;
 @Testcontainers
 class JavaUdfIT {
     @Container
-    private static final ExasolContainer<? extends ExasolContainer<?>> EXASOL = new ExasolContainer<>("8.23.1")
+    @SuppressWarnings("resource") // Will be closed by @Container annotation
+    private static final ExasolContainer<? extends ExasolContainer<?>> EXASOL = new ExasolContainer<>()
             .withReuse(true);
     private static final Logger LOGGER = Logger.getLogger(JavaUdfIT.class.getName());
     private static final String PROJECT_VERSION = MavenProjectVersionGetter.getCurrentProjectVersion();
