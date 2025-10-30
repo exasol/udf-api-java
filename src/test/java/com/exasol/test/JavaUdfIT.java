@@ -83,7 +83,7 @@ class JavaUdfIT {
 
     @CsvSource({ //
             "getDatabaseName, DB1", //
-            "getDatabaseVersion, \\d\\.\\d\\d?\\.\\d\\d?", //
+            "getDatabaseVersion, \\d+\\.\\d+\\.\\d+", //
             "getNodeCount, 1", //
             "getOutputType, RETURN", //
             "getScopeUser, SYS", //
@@ -95,7 +95,7 @@ class JavaUdfIT {
     void testGetDatabaseContextInformation(final String methodName, final String expectedResult) {
         final String fullyQualifiedScriptName = createContextMethodTestScript(schema, methodName);
         final String value = executeScalarScriptWithStringReturn(fullyQualifiedScriptName, methodName);
-        assertThat(value, matchesPattern(expectedResult));
+        assertThat("Result value of method '" + methodName + "()'", value, matchesPattern(expectedResult));
     }
 
     private String createContextMethodTestScript(final Schema schema, final String methodName) {
