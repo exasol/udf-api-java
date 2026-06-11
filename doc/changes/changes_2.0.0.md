@@ -35,4 +35,3 @@ In the course of the Java 17 switch, we also upgraded from JUnit 5 to 6 and adde
 
 * Updated `com.exasol:project-keeper-maven-plugin:5.6.1` to `5.6.2`
 * Added `org.apache.maven.plugins:maven-dependency-plugin:3.10.0`
-* Updated `org.apache.maven.plugins:maven-jar-plugin:3.5.0` to `3.4.1`
