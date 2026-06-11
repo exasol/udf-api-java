@@ -118,9 +118,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>3.5.0</version>
                 <executions>
                     <execution>
                         <goals>
+                            <!-- Build JAR with UDFs for integration tests -->
+                            <!-- Note: the test-jar is also published to Maven Central -->
                             <goal>test-jar</goal>
                         </goals>
                         <configuration>
