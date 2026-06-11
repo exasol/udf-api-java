@@ -10,15 +10,17 @@ import java.sql.*;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Logger;
 
+import com.exasol.dbbuilder.dialects.exasol.ExasolObjectConfiguration;
+import com.exasol.exasoltestsetup.ExasolTestSetup;
+import com.exasol.exasoltestsetup.ExasolTestSetupFactory;
+import com.exasol.udfdebugging.UdfTestSetup;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import com.exasol.bucketfs.Bucket;
 import com.exasol.bucketfs.BucketAccessException;
-import com.exasol.containers.ExasolContainer;
 import com.exasol.dbbuilder.dialects.Schema;
 import com.exasol.dbbuilder.dialects.exasol.ExasolObjectFactory;
 import com.exasol.matcher.ResultSetStructureMatcher;
@@ -41,10 +43,8 @@ import com.exasol.mavenprojectversiongetter.MavenProjectVersionGetter;
  */
 @Testcontainers
 class JavaUdfIT {
-    @Container
     @SuppressWarnings("resource") // Will be closed by @Container annotation
-    private static final ExasolContainer<? extends ExasolContainer<?>> EXASOL = new ExasolContainer<>()
-            .withReuse(true);
+    private static final ExasolTestSetup EXASOL = new ExasolTestSetupFactory().getTestSetup();
     private static final Logger LOGGER = Logger.getLogger(JavaUdfIT.class.getName());
     private static final String PROJECT_VERSION = MavenProjectVersionGetter.getCurrentProjectVersion();
     private static final String UDF_UNDER_TEST_JAR = "udf-api-java-" + PROJECT_VERSION + "-tests.jar";
@@ -55,11 +55,14 @@ class JavaUdfIT {
     private static Schema schema;
 
     @BeforeAll
-    static void beforeAll() throws BucketAccessException, FileNotFoundException {
+    static void beforeAll() throws BucketAccessException, FileNotFoundException, SQLException {
         connection = EXASOL.createConnection();
-        final ExasolObjectFactory factory = new ExasolObjectFactory(connection);
-        schema = factory.createSchema("CONTEXT_SCHEMA");
-        copyUdfUnderTestToDefaultBucket();
+        try(final UdfTestSetup udfTestSetup=new UdfTestSetup(EXASOL, connection)) {
+            final ExasolObjectFactory factory = new ExasolObjectFactory(EXASOL.createConnection(),
+                    ExasolObjectConfiguration.builder().withJvmOptions(udfTestSetup.getJvmOptions()).build());
+            schema = factory.createSchema("CONTEXT_SCHEMA");
+            copyUdfUnderTestToDefaultBucket();
+        }
     }
 
     private static void copyUdfUnderTestToDefaultBucket() throws BucketAccessException, FileNotFoundException {
