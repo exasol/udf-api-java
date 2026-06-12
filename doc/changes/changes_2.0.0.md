@@ -14,6 +14,8 @@ In the course of the Java 17 switch, we also upgraded from JUnit 5 to 6 and adde
 
 ## Bugfixes
 
+* #40: Report integration test coverage
+
 ## Dependency Updates
 
 ### Compile Dependency Updates
