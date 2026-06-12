@@ -7,10 +7,13 @@ import static org.hamcrest.Matchers.matchesPattern;
 import java.io.FileNotFoundException;
 import java.nio.file.Path;
 import java.sql.*;
+import java.util.Locale;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Logger;
 
 import com.exasol.dbbuilder.dialects.exasol.ExasolObjectConfiguration;
+import com.exasol.dbbuilder.dialects.exasol.ExasolSchema;
+import com.exasol.dbbuilder.dialects.exasol.udf.UdfScript;
 import com.exasol.exasoltestsetup.ExasolTestSetup;
 import com.exasol.exasoltestsetup.ExasolTestSetupFactory;
 import com.exasol.udfdebugging.UdfTestSetup;
@@ -21,7 +24,6 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import com.exasol.bucketfs.Bucket;
 import com.exasol.bucketfs.BucketAccessException;
-import com.exasol.dbbuilder.dialects.Schema;
 import com.exasol.dbbuilder.dialects.exasol.ExasolObjectFactory;
 import com.exasol.matcher.ResultSetStructureMatcher;
 import com.exasol.mavenprojectversiongetter.MavenProjectVersionGetter;
@@ -43,7 +45,6 @@ import com.exasol.mavenprojectversiongetter.MavenProjectVersionGetter;
  */
 @Testcontainers
 class JavaUdfIT {
-    @SuppressWarnings("resource") // Will be closed by @Container annotation
     private static final ExasolTestSetup EXASOL = new ExasolTestSetupFactory().getTestSetup();
     private static final Logger LOGGER = Logger.getLogger(JavaUdfIT.class.getName());
     private static final String PROJECT_VERSION = MavenProjectVersionGetter.getCurrentProjectVersion();
@@ -52,17 +53,17 @@ class JavaUdfIT {
     private static final String JAR_INCLUDE_DIRECTIVE = "%jar /buckets/bfsdefault/default/" + UDF_UNDER_TEST_JAR;
 
     private static Connection connection;
-    private static Schema schema;
+    private static UdfTestSetup udfTestSetup;
+    private static ExasolSchema schema;
 
     @BeforeAll
     static void beforeAll() throws BucketAccessException, FileNotFoundException, SQLException {
         connection = EXASOL.createConnection();
-        try(final UdfTestSetup udfTestSetup=new UdfTestSetup(EXASOL, connection)) {
-            final ExasolObjectFactory factory = new ExasolObjectFactory(EXASOL.createConnection(),
-                    ExasolObjectConfiguration.builder().withJvmOptions(udfTestSetup.getJvmOptions()).build());
-            schema = factory.createSchema("CONTEXT_SCHEMA");
-            copyUdfUnderTestToDefaultBucket();
-        }
+        udfTestSetup=new UdfTestSetup(EXASOL, connection);
+        final ExasolObjectFactory factory = new ExasolObjectFactory(connection,
+                ExasolObjectConfiguration.builder().withJvmOptions(udfTestSetup.getJvmOptions()).build());
+        schema = factory.createSchema("CONTEXT_SCHEMA");
+        copyUdfUnderTestToDefaultBucket();
     }
 
     private static void copyUdfUnderTestToDefaultBucket() throws BucketAccessException, FileNotFoundException {
@@ -82,46 +83,38 @@ class JavaUdfIT {
         if ((connection != null) && !connection.isClosed()) {
             connection.close();
         }
+        if (udfTestSetup != null) {
+            udfTestSetup.close();
+        }
     }
 
-    @CsvSource({ //
-            "getDatabaseName, DB1", //
-            "getDatabaseVersion, \\d+\\.\\d+\\.\\d+", //
-            "getNodeCount, 1", //
-            "getOutputType, RETURN", //
-            "getScopeUser, SYS", //
-            "getScriptCode, %jar(?:\\R|.)*class(?:\\R|.)*", //
-            "getScriptSchema, CONTEXT_SCHEMA", //
-            "getScriptName, CONTEXT_METHOD_GETSCRIPTNAME", //
+    @CsvSource({
+            "getDatabaseName, DB1",
+            "getDatabaseVersion, \\d+\\.\\d+\\.\\d+",
+            "getNodeCount, 1",
+            "getOutputType, RETURN",
+            "getScopeUser, SYS",
+            "getScriptCode, %jvmoption(?:\\R|.)*%jar(?:\\R|.)*class(?:\\R|.)*",
+            "getScriptSchema, CONTEXT_SCHEMA",
+            "getScriptName, CONTEXT_METHOD_GETSCRIPTNAME",
             "getScriptLanguage, Java \\d+\\.\\d+.\\d+" })
     @ParameterizedTest
     void testGetDatabaseContextInformation(final String methodName, final String expectedResult) {
-        final String fullyQualifiedScriptName = createContextMethodTestScript(schema, methodName);
-        final String value = executeScalarScriptWithStringReturn(fullyQualifiedScriptName, methodName);
-        assertThat("Result of method " + methodName + "()", value, matchesPattern(expectedResult));
-    }
-
-    private String createContextMethodTestScript(final Schema schema, final String methodName) {
-        final String scriptName = "CONTEXT_METHOD_" + methodName.toUpperCase();
-        final String fullyQualifiedScriptName = getFullyQualifiedScriptName(schema, scriptName);
-        executeStatement("CREATE JAVA SCALAR SCRIPT " + fullyQualifiedScriptName //
-                + "(method_name VARCHAR(100)) RETURNS VARCHAR(2000) AS\n" //
-                + "    " + JAR_INCLUDE_DIRECTIVE + ";\n" //
-                + "    %scriptclass com.exasol.test.testobject.MetadataMethodExerciser;\n" //
-                + "\n/\n");
-        return fullyQualifiedScriptName;
-    }
-
-    private static String getFullyQualifiedScriptName(final Schema schema, final String scriptName) {
-        return "\"" + schema.getName() + "\".\"" + scriptName + "\"";
-    }
-
-    private static void executeStatement(final String sql) {
-        try (final Statement statement = connection.createStatement()) {
-            statement.execute(sql);
-        } catch (final SQLException exception) {
-            throw new AssertionError("Unable to execute statement:\n" + sql + "\n", exception);
+        try(final UdfScript script = createContextMethodTestScript(methodName)) {
+            final String value = executeScalarScriptWithStringReturn(script.getFullyQualifiedName(), methodName);
+            assertThat("Result of method " + methodName + "()", value, matchesPattern(expectedResult));
         }
+    }
+
+    private UdfScript createContextMethodTestScript(final String methodName) {
+        final String scriptName = "CONTEXT_METHOD_" + methodName.toUpperCase(Locale.ENGLISH);
+        return schema.createUdfBuilder(scriptName)
+                .parameter("method_name", "VARCHAR(100)")
+                .inputType(UdfScript.InputType.SCALAR)
+                .language(UdfScript.Language.JAVA)
+                .content(JAR_INCLUDE_DIRECTIVE + ";\n%scriptclass com.exasol.test.testobject.MetadataMethodExerciser;")
+                .returns("VARCHAR(2000)")
+                .build();
     }
 
     private String executeScalarScriptWithStringReturn(final String fullyQualifiedScriptName, final String methodName) {
@@ -139,16 +132,17 @@ class JavaUdfIT {
     void testGetTimestampFromSetScript() {
         final String date = "2001-02-03";
         final String time = "04:05:06.007";
-        final String scriptName = "GET_TIMESTAMP_SCRIPT";
-        final String fullyQualifiedScriptName = getFullyQualifiedScriptName(schema, scriptName);
-        executeStatement("CREATE JAVA SET SCRIPT " + fullyQualifiedScriptName //
-                + "(V TIMESTAMP) RETURNS VARCHAR(2000) AS\n" //
-                + "    " + JAR_INCLUDE_DIRECTIVE + ";\n" //
-                + "    %scriptclass com.exasol.test.testobject.GetTimestampUdf;\n" //
-                + "/\n");
-        assertQueryResult("SELECT " + fullyQualifiedScriptName + "(T.V)" + //
-                "FROM VALUES (TO_TIMESTAMP('" + date + "T" + time + "Z', 'YYYY-MM-DDTHH24:MI:SS.FF3Z')) AS T(V)", //
-                table().row(date + " " + time));
+        try(UdfScript script = schema.createUdfBuilder("GET_TIMESTAMP_SCRIPT")
+                .parameter("V", "TIMESTAMP")
+                .language(UdfScript.Language.JAVA)
+                .inputType(UdfScript.InputType.SET)
+                .content(JAR_INCLUDE_DIRECTIVE +";\n%scriptclass com.exasol.test.testobject.GetTimestampUdf;")
+                .returns("VARCHAR(2000)")
+                .build()) {
+            assertQueryResult("SELECT " + script.getFullyQualifiedName() + "(T.V)" +
+                            " FROM VALUES (TO_TIMESTAMP('" + date + "T" + time + "Z', 'YYYY-MM-DDTHH24:MI:SS.FF3Z')) AS T(V)",
+                    table().row(date + " " + time));
+        }
     }
 
     private static void assertQueryResult(final String sql, final ResultSetStructureMatcher.Builder rowMatcher) {
@@ -162,24 +156,29 @@ class JavaUdfIT {
 
     @Test
     void testGetSizeFromScalarScript() {
-        final String scriptName = "SIZE_IN_SCALAR_CONTEXT";
-        final String fullyQualifiedScriptName = getFullyQualifiedScriptName(schema, scriptName);
-        executeStatement("CREATE JAVA SCALAR SCRIPT " + fullyQualifiedScriptName + "() RETURNS INTEGER AS\n" //
-                + "    " + JAR_INCLUDE_DIRECTIVE + ";\n" //
-                + "    %scriptclass com.exasol.test.testobject.GetSizeUdf;\n" //
-                + "/\n");
-        assertQueryResult("SELECT " + fullyQualifiedScriptName + "()", table().row(1L));
+        try(final UdfScript script = schema.createUdfBuilder("SIZE_IN_SCALAR_CONTEXT")
+                .language(UdfScript.Language.JAVA)
+                .inputType(UdfScript.InputType.SCALAR)
+                .content(JAR_INCLUDE_DIRECTIVE + ";\n%scriptclass com.exasol.test.testobject.GetSizeUdf;")
+                .returns("INTEGER")
+                .build()) {
+            assertQueryResult("SELECT " + script.getFullyQualifiedName() + "()", table().row(1L));
+        }
     }
 
     @Test
     void testGetSizeFromSetScript() {
         final String scriptName = "SIZE_IN_SET_CONTEXT";
-        final String fullyQualifiedScriptName = getFullyQualifiedScriptName(schema, scriptName);
-        executeStatement("CREATE JAVA SET SCRIPT " + fullyQualifiedScriptName + "(COL CHAR(1)) RETURNS INTEGER AS\n" //
-                + "    " + JAR_INCLUDE_DIRECTIVE + ";\n" //
-                + "    %scriptclass com.exasol.test.testobject.GetSizeUdf;\n" //
-                + "/\n");
-        assertQueryResult("SELECT " + fullyQualifiedScriptName + "(v) FROM VALUES ('a'), ('b'), ('c') AS v(v)", //
-                table().row(3L));
+        try(final UdfScript script = schema.createUdfBuilder(scriptName)
+                .parameter("COL", "CHAR(1)")
+                .language(UdfScript.Language.JAVA)
+                .inputType(UdfScript.InputType.SET)
+                .content(JAR_INCLUDE_DIRECTIVE + ";\n%scriptclass com.exasol.test.testobject.GetSizeUdf;")
+                .returns("INTEGER")
+                .build()
+        ) {
+            assertQueryResult("SELECT " + script.getFullyQualifiedName() + "(v) FROM VALUES ('a'), ('b'), ('c') AS v(v)",
+                    table().row(3L));
+        }
     }
 }
