@@ -26,9 +26,9 @@ In the course of the Java 17 switch, we also upgraded from JUnit 5 to 6 and adde
 
 * Added `com.exasol:exasol-test-setup-abstraction-java:2.1.11`
 * Updated `com.exasol:exasol-testcontainers:7.2.3` to `7.3.0`
+* Updated `com.exasol:test-db-builder-java:4.0.0` to `4.0.1`
 * Added `com.exasol:udf-debugging-java:0.6.18`
 * Added `org.jacoco:org.jacoco.agent:0.8.14`
-* Updated `org.junit.jupiter:junit-jupiter-params:5.14.4` to `6.1.0`
 * Updated `org.slf4j:slf4j-jdk14:2.0.17` to `2.0.18`
 
 ### Plugin Dependency Updates
