@@ -18,10 +18,6 @@ In the course of the Java 17 switch, we also upgraded from JUnit 5 to 6 and adde
 
 ## Dependency Updates
 
-### Compile Dependency Updates
-
-* Added `fr.turri:aXMLRPC:1.17.0`
-
 ### Test Dependency Updates
 
 * Added `com.exasol:exasol-test-setup-abstraction-java:2.1.11`
