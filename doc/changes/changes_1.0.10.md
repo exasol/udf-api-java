@@ -18,7 +18,6 @@ In this release we inject the JaCoCo code coverage agent into the UDF when runni
 * Updated `com.exasol:exasol-testcontainers:7.2.3` to `7.3.0`
 * Added `com.exasol:udf-debugging-java:0.6.18`
 * Added `org.jacoco:org.jacoco.agent:0.8.14`
-* Updated `org.junit.jupiter:junit-jupiter-params:5.14.4` to `6.1.0`
 * Updated `org.slf4j:slf4j-jdk14:2.0.17` to `2.0.18`
 
 ### Plugin Dependency Updates
