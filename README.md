@@ -28,3 +28,4 @@ User Defined Functions extend Exasol with functions and scripts that can be call
 
 * [Changelog](doc/changes/changelog.md)
 * [Dependencies](dependencies.md)
+* [Test strategy](doc/test_strategy.md)

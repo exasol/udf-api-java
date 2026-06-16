@@ -11,15 +11,17 @@ import java.util.Locale;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Logger;
 
+import com.exasol.containers.ExasolContainer;
 import com.exasol.dbbuilder.dialects.exasol.ExasolObjectConfiguration;
 import com.exasol.dbbuilder.dialects.exasol.ExasolSchema;
 import com.exasol.dbbuilder.dialects.exasol.udf.UdfScript;
-import com.exasol.exasoltestsetup.ExasolTestSetup;
-import com.exasol.exasoltestsetup.ExasolTestSetupFactory;
-import com.exasol.udfdebugging.UdfTestSetup;
+import com.exasol.test.testobject.GetSizeUdf;
+import com.exasol.test.testobject.GetTimestampUdf;
+import com.exasol.test.testobject.MetadataMethodExerciser;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import com.exasol.bucketfs.Bucket;
@@ -45,23 +47,24 @@ import com.exasol.mavenprojectversiongetter.MavenProjectVersionGetter;
  */
 @Testcontainers
 class JavaUdfIT {
-    private static final ExasolTestSetup EXASOL = new ExasolTestSetupFactory().getTestSetup();
+    @Container
+    @SuppressWarnings("resource") // Will be closed by @Container annotation
+    private static final ExasolContainer<? extends ExasolContainer<?>> EXASOL = new ExasolContainer<>()
+            .withReuse(true);
     private static final Logger LOGGER = Logger.getLogger(JavaUdfIT.class.getName());
     private static final String PROJECT_VERSION = MavenProjectVersionGetter.getCurrentProjectVersion();
     private static final String UDF_UNDER_TEST_JAR = "udf-api-java-" + PROJECT_VERSION + "-tests.jar";
     private static final Path UDF_UNDER_TEST_JAR_PATH = Path.of("target", UDF_UNDER_TEST_JAR);
-    private static final String JAR_INCLUDE_DIRECTIVE = "%jar /buckets/bfsdefault/default/" + UDF_UNDER_TEST_JAR;
+    private static final String UDF_BUCKETFS_PATH = " /buckets/bfsdefault/default/" + UDF_UNDER_TEST_JAR;
 
     private static Connection connection;
-    private static UdfTestSetup udfTestSetup;
     private static ExasolSchema schema;
 
     @BeforeAll
-    static void beforeAll() throws BucketAccessException, FileNotFoundException, SQLException {
+    static void beforeAll() throws BucketAccessException, FileNotFoundException {
         connection = EXASOL.createConnection();
-        udfTestSetup=new UdfTestSetup(EXASOL, connection);
         final ExasolObjectFactory factory = new ExasolObjectFactory(connection,
-                ExasolObjectConfiguration.builder().withJvmOptions(udfTestSetup.getJvmOptions()).build());
+                ExasolObjectConfiguration.builder().build());
         schema = factory.createSchema("CONTEXT_SCHEMA");
         copyUdfUnderTestToDefaultBucket();
     }
@@ -83,9 +86,6 @@ class JavaUdfIT {
         if ((connection != null) && !connection.isClosed()) {
             connection.close();
         }
-        if (udfTestSetup != null) {
-            udfTestSetup.close();
-        }
     }
 
     @CsvSource({
@@ -94,7 +94,7 @@ class JavaUdfIT {
             "getNodeCount, 1",
             "getOutputType, RETURN",
             "getScopeUser, SYS",
-            "getScriptCode, %jvmoption(?:\\R|.)*%jar(?:\\R|.)*class(?:\\R|.)*",
+            "getScriptCode, %scriptclass(?:\\R|.)*%jar(?:\\R|.)*",
             "getScriptSchema, CONTEXT_SCHEMA",
             "getScriptName, CONTEXT_METHOD_GETSCRIPTNAME",
             "getScriptLanguage, Java \\d+\\.\\d+.\\d+" })
@@ -112,7 +112,7 @@ class JavaUdfIT {
                 .parameter("method_name", "VARCHAR(100)")
                 .inputType(UdfScript.InputType.SCALAR)
                 .language(UdfScript.Language.JAVA)
-                .content(JAR_INCLUDE_DIRECTIVE + ";\n%scriptclass com.exasol.test.testobject.MetadataMethodExerciser;")
+                .bucketFsContent(MetadataMethodExerciser.class.getName(), UDF_BUCKETFS_PATH)
                 .returns("VARCHAR(2000)")
                 .build();
     }
@@ -136,7 +136,7 @@ class JavaUdfIT {
                 .parameter("V", "TIMESTAMP")
                 .language(UdfScript.Language.JAVA)
                 .inputType(UdfScript.InputType.SET)
-                .content(JAR_INCLUDE_DIRECTIVE +";\n%scriptclass com.exasol.test.testobject.GetTimestampUdf;")
+                .bucketFsContent(GetTimestampUdf.class.getName(), UDF_BUCKETFS_PATH)
                 .returns("VARCHAR(2000)")
                 .build()) {
             assertQueryResult("SELECT " + script.getFullyQualifiedName() + "(T.V)" +
@@ -159,7 +159,7 @@ class JavaUdfIT {
         try(final UdfScript script = schema.createUdfBuilder("SIZE_IN_SCALAR_CONTEXT")
                 .language(UdfScript.Language.JAVA)
                 .inputType(UdfScript.InputType.SCALAR)
-                .content(JAR_INCLUDE_DIRECTIVE + ";\n%scriptclass com.exasol.test.testobject.GetSizeUdf;")
+                .bucketFsContent(GetSizeUdf.class.getName(), UDF_BUCKETFS_PATH)
                 .returns("INTEGER")
                 .build()) {
             assertQueryResult("SELECT " + script.getFullyQualifiedName() + "()", table().row(1L));
@@ -173,7 +173,7 @@ class JavaUdfIT {
                 .parameter("COL", "CHAR(1)")
                 .language(UdfScript.Language.JAVA)
                 .inputType(UdfScript.InputType.SET)
-                .content(JAR_INCLUDE_DIRECTIVE + ";\n%scriptclass com.exasol.test.testobject.GetSizeUdf;")
+                .bucketFsContent(GetSizeUdf.class.getName(), UDF_BUCKETFS_PATH)
                 .returns("INTEGER")
                 .build()
         ) {
