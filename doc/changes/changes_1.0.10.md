@@ -4,7 +4,7 @@ Code name: Test Strategy Revisited
 
 ## Summary
 
-In this release we experimented with inject the JaCoCo code coverage agent into the UDF when running the integration test, so that we can measure the test coverage.
+In this release we experimented with injecting the JaCoCo code coverage agent into the UDF when running the integration test, so that we can measure the test coverage.
 
 In the end we decided against the approach, because however we turned it, the coverage we would measure would not represent the actual API coverage. But the good news is that our attempts resulted in cleaner test code. If you want to learn more, check out the [test strategy](../test_strategy.md).
 
