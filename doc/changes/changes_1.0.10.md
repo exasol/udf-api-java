@@ -1,4 +1,4 @@
-# Exasol UDF API for Java 1.0.10, released 2026-06-15
+# Exasol UDF API for Java 1.0.10, released 2026-06-16
 
 Code name: Test Strategy Revisited
 
