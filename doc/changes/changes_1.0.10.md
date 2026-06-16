@@ -1,18 +1,27 @@
-# Exasol UDF API for Java 1.0.10, released 2026-??-??
+# Exasol UDF API for Java 1.0.10, released 2026-06-16
 
-Code name:
+Code name: Test Strategy Revisited
 
 ## Summary
 
-## Features
+In this release we experimented with injecting the JaCoCo code coverage agent into the UDF when running the integration test, so that we can measure the test coverage.
 
-* ISSUE_NUMBER: description
+In the end we decided against the approach, because however we turned it, the coverage we would measure would not represent the actual API coverage. But the good news is that our attempts resulted in cleaner test code. If you want to learn more, check out the [test strategy](../test_strategy.md).
+
+We also updated a number of dependencies.
+
+## Bugfixes
+
+* #40: Report integration test coverage
 
 ## Dependency Updates
 
 ### Test Dependency Updates
 
+* Updated `com.exasol:exasol-testcontainers:7.2.3` to `7.3.0`
+* Updated `com.exasol:test-db-builder-java:4.0.0` to `4.0.1`
 * Added `org.jacoco:org.jacoco.agent:0.8.14`
+* Updated `org.slf4j:slf4j-jdk14:2.0.17` to `2.0.18`
 
 ### Plugin Dependency Updates
 

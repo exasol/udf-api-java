@@ -19,7 +19,34 @@ This project contains the API required to build [User Defined Functions](https:/
 
 User Defined Functions extend Exasol with functions and scripts that can be called from within SQL statements.
 
+
+
 ## Information for API Users
+
+### Dependency
+
+This library is already included in the Exasol database. Therefore, you should include it with the scope `provided` in Maven or `compileOnly` in Gradle. This ensures that the library is available during compilation but is not bundled with your UDF jar, avoiding conflicts with the version pre-installed in the database.
+
+Replace the version numbers below with the latest version.
+
+#### Maven
+
+```xml
+<dependency>
+    <groupId>com.exasol</groupId>
+    <artifactId>udf-api-java</artifactId>
+    <version>1.0.10</version>
+    <scope>provided</scope>
+</dependency>
+```
+
+#### Gradle
+
+```groovy
+dependencies {
+    compileOnly 'com.exasol:udf-api-java:1.0.10'
+}
+```
 
 * [API documentation as JavaDoc](https://exasol.github.io/udf-api-java)
 * [Java tutorials](https://github.com/exasol/exasol-java-tutorial) with examples of how to build, test and run Java UDFs
@@ -28,3 +55,4 @@ User Defined Functions extend Exasol with functions and scripts that can be call
 
 * [Changelog](doc/changes/changelog.md)
 * [Dependencies](dependencies.md)
+* [Test strategy](doc/test_strategy.md)
