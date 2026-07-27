@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>udf-api-java</artifactId>
-    <version>1.0.10</version>
+    <version>1.0.11</version>
     <name>Exasol UDF API for Java</name>
     <description>Interface between User Defined Functions (UDFs) written in Java and the Exasol database.</description>
     <url>https://github.com/exasol/udf-api-java/</url>
@@ -15,7 +15,8 @@
         <dependency>
             <groupId>com.exasol</groupId>
             <artifactId>exasol-testcontainers</artifactId>
-            <version>7.3.0</version>
+            <!-- Upgrading direct dependency com.exasol:exasol-testcontainers:jar:7.3.0:test to fix CVE-2026-9563 -->
+            <version>8.0.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -85,7 +86,7 @@
             <plugin>
                 <groupId>com.exasol</groupId>
                 <artifactId>project-keeper-maven-plugin</artifactId>
-                <version>5.6.2</version>
+                <version>5.7.4</version>
                 <executions>
                     <execution>
                         <goals>
@@ -119,7 +120,7 @@
     <parent>
         <artifactId>udf-api-java-generated-parent</artifactId>
         <groupId>com.exasol</groupId>
-        <version>1.0.10</version>
+        <version>1.0.11</version>
         <relativePath>pk_generated_parent.pom</relativePath>
     </parent>
 </project>
