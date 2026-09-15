@@ -1,4 +1,4 @@
-# Exasol UDF API for Java 1.0.12, released 2026-??-??
+# Exasol UDF API for Java 1.0.12, released 2026-09-15
 
 Code name: Fixed vulnerability CVE-2026-86231 in com.github.mwiede:jsch:jar:2.28.5:test
 
@@ -26,9 +26,13 @@ A security flaw has been discovered in mwiede jsch up to 2.28.5. Affected is the
 * Updated `com.exasol:exasol-testcontainers:8.0.0` to `8.0.2`
 * Updated `com.exasol:hamcrest-resultset-matcher:1.7.2` to `1.7.3`
 * Updated `com.exasol:test-db-builder-java:4.0.1` to `4.0.2`
-* Updated `org.junit.jupiter:junit-jupiter-params:5.14.4` to `6.1.3`
 * Updated `org.slf4j:slf4j-jdk14:2.0.18` to `2.0.19`
 
 ### Plugin Dependency Updates
 
+* Updated `com.exasol:error-code-crawler-maven-plugin:2.1.0` to `2.1.1`
 * Updated `com.exasol:project-keeper-maven-plugin:5.7.4` to `5.7.5`
+* Updated `io.github.git-commit-id:git-commit-id-maven-plugin:10.0.0` to `10.0.1`
+* Updated `org.apache.maven.plugins:maven-jar-plugin:3.5.0` to `3.5.1`
+* Updated `org.apache.maven.plugins:maven-toolchains-plugin:3.2.0` to `3.3.0`
+* Updated `org.codehaus.mojo:flatten-maven-plugin:1.7.3` to `1.8.0`
